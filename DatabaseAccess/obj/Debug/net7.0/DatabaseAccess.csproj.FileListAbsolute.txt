@@ -1,0 +1,17 @@
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\bin\Debug\net7.0\DatabaseAccess.deps.json
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\bin\Debug\net7.0\DatabaseAccess.runtimeconfig.json
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\bin\Debug\net7.0\DatabaseAccess.dll
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\bin\Debug\net7.0\DatabaseAccess.pdb
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\bin\Debug\net7.0\ModelClasses.dll
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\bin\Debug\net7.0\ModelClasses.pdb
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\obj\Debug\net7.0\DatabaseAccess.csproj.AssemblyReference.cache
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\obj\Debug\net7.0\DatabaseAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\obj\Debug\net7.0\DatabaseAccess.AssemblyInfoInputs.cache
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\obj\Debug\net7.0\DatabaseAccess.AssemblyInfo.cs
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\obj\Debug\net7.0\DatabaseAccess.csproj.CoreCompileInputs.cache
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\obj\Debug\net7.0\Database.3C889C45.Up2Date
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\obj\Debug\net7.0\DatabaseAccess.dll
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\obj\Debug\net7.0\refint\DatabaseAccess.dll
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\obj\Debug\net7.0\DatabaseAccess.pdb
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\obj\Debug\net7.0\DatabaseAccess.genruntimeconfig.cache
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\DatabaseAccess\obj\Debug\net7.0\ref\DatabaseAccess.dll

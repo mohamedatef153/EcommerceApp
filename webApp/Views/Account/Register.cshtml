@@ -1,0 +1,106 @@
+﻿@model RegisterViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px;
+            margin: auto;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-login a {
+            margin: 0 5px;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container form-container">
+        <div class="form-box">
+            <h3 class="text-center">Register</h3>
+            <form asp-action="Register" asp-controller="Account" method="post">
+                <div class="form-group">
+                    <label asp-for="@Model.applicationUser.FirstName">First Name:</label>
+                    <input asp-for="@Model.applicationUser.FirstName" class="form-control" placeholder="Enter first name">
+                    <span asp-validation-for="@Model.applicationUser.FirstName"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.applicationUser.LastName">Last Name:</label>
+                    <input asp-for="@Model.applicationUser.LastName" class="form-control" placeholder="Enter last name">
+                    <span asp-validation-for="@Model.applicationUser.LastName"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="@Model.UserName">UserName:</label>
+                    <input asp-for="@Model.UserName" class="form-control"  placeholder="Enter User Name">
+                     <span asp-validation-for="@Model.UserName"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Email">Email address:</label>
+                    <input asp-for="@Model.Email" class="form-control"  placeholder="Enter email">
+                     <span asp-validation-for="@Model.Email"></span>
+                </div>
+                  <div class="form-group">
+                    <label asp-for="@Model.applicationUser.Address">Address:</label>
+                    <input asp-for="@Model.applicationUser.Address" class="form-control"  placeholder="Enter Address">
+                     <span asp-validation-for="@Model.applicationUser.Address"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.applicationUser.City">City</label>
+                    <input asp-for="@Model.applicationUser.City" class="form-control" placeholder="Enter City">
+                    <span asp-validation-for="@Model.applicationUser.City"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Password">Passwords:</label>
+                    <input asp-for="@Model.Password" class="form-control"  placeholder="Enter password">
+                     <span asp-validation-for="@Model.Password"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.ConfirmPassword">Confirm Password:</label>
+                    <input asp-for="@Model.ConfirmPassword" class="form-control"  placeholder="Confirm password">
+                     <span asp-validation-for="@Model.ConfirmPassword"></span>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                <div class="text-center mt-3">
+                    <a asp-action="Login"asp-controller="Account">Already have an account? Login</a>
+                </div>
+                <div class="text-center mt-3 social-login">
+                    <a href="#" class="btn btn-primary"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="btn btn-danger"><i class="fab fa-google"></i></a>
+                    <a href="#" class="btn btn-info"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+  
+</body>
+</html>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

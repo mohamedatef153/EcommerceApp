@@ -1,0 +1,71 @@
+﻿@model CartViewModel
+
+<!DOCTYPE html>
+
+    <style>
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1rem;
+        }
+
+            .cart-item img {
+                width: 100px;
+                height: auto;
+                margin-right: 1rem;
+            }
+
+            .cart-item .item-info {
+                flex-grow: 1;
+            }
+
+            .cart-item .item-actions {
+                text-align: right;
+            }
+    </style>
+
+<body>
+    @if(Model.productList.Count()>0){
+    <div class="container mt-5">
+        <h1 class="mb-4">Shopping Cart</h1>
+        @foreach (var item in Model.productList)
+        {
+            <div class="cart-item" data-item-id="@item.Product.Name">
+                <img src="~/Images/@item.Product.HomeImgUrl" alt="Product Image">
+                <div class="item-info">
+                    <h5>@item.Product.Name</h5>
+                    <p>Price: $<span class="item-price">@item.Product.Price</span></p>
+                    <div class="input-group mb-3" style="max-width: 150px;">
+                            <a asp-action="MinusItem" asp-controller="Cart" asp-route-productId="@item.Product.Id"  class="btn btn-outline-secondary btn-minus">
+                                <i class="fas fa-minus"></i>
+                            </a>
+                            <input type="text" class="form-control text-center item-quantity" value="@item.Quantity" readonly>
+                            <a asp-action="AddtoCart" asp-controller="Cart" asp-route-productId="@item.Product.Id" asp-route-returnUrl="Yes" class="btn btn-outline-secondary btn-plus">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                    </div>
+                    <p>Total: $<span class="item-total">@(item.Quantity * item.Product.Price) </span></p>
+                </div>
+                <div class="item-actions">
+                        <a asp-action="Delete" asp-controller="Cart" asp-route-productId="@item.Product.Id" class="btn btn-danger btn-delete">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                </div>
+            </div>
+        }
+        <a asp-action="orderDetailPreview" asp-controller="Order" class="btn btn-success">SubmitOrder</a>
+        </div>
+    }
+    else
+    {
+        <h1>No items </h1>
+    }
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

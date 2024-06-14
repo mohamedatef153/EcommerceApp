@@ -1,0 +1,209 @@
+﻿@model SummaryVM
+
+@{
+    ViewData["Title"] = "Order Detail Preview";
+}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f3e7e9 0%, #e3eeff 100%);
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+    .card-header {
+        background-color: #007bff;
+        color: white;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        padding: 1rem;
+        font-size: 1.25rem;
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #555;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 0.75rem;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
+        transition: background-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .table {
+        margin-top: 1rem;
+    }
+
+        .table th, .table td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+</style>
+
+<div class="container mt-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+    <form asp-action="Summary"  asp-controller="Order"method="post">
+        <input type="hidden" asp-for="@Model.cartUserId" />
+        <!-- First Section: Customer Details -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-user"></i> Customer Details
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="orderSummary.Name" class="form-label">Name</label>
+                        <input asp-for="orderSummary.Name" class="form-control" />
+                        <span asp-validation-for="orderSummary.Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="orderSummary.PhoneNumber" class="form-label">Phone Number</label>
+                        <input asp-for="orderSummary.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="orderSummary.PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label asp-for="orderSummary.DeliveryStreetAddress" class="form-label">Street Address</label>
+                        <input asp-for="orderSummary.DeliveryStreetAddress" class="form-control" />
+                        <span asp-validation-for="orderSummary.DeliveryStreetAddress" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="orderSummary.City" class="form-label">City</label>
+                        <input asp-for="orderSummary.City" class="form-control" />
+                        <span asp-validation-for="orderSummary.City" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="orderSummary.State" class="form-label">State</label>
+                        <input asp-for="orderSummary.State" class="form-control" />
+                        <span asp-validation-for="orderSummary.State" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="orderSummary.PostalCode" class="form-label">Postal Code</label>
+                        <input asp-for="orderSummary.PostalCode" class="form-control" />
+                        <span asp-validation-for="orderSummary.PostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="orderSummary.DateOfOrder" class="form-label">Date of Order</label>
+                        <input asp-for="orderSummary.DateOfOrder" class="form-control" readonly />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Section: Shopping Cart Details -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-shopping-cart"></i> Shopping Cart
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                double totalorderprice = 0.0;
+                            }
+                            @foreach (var item in Model.UserCartList)
+                            {
+                                <tr>
+                                    <td>@item.Product.Name</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Product.Price.ToString("C")</td>
+
+                                    <td>@(item.Quantity * item.Product.Price)$</td>
+                                    @{
+                                        totalorderprice += item.Quantity * item.Product.Price;
+                                    }
+                                </tr>
+                               
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Third Section: Billing Info -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-credit-card"></i> Billing Information
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Subtotal</label>
+                        <input class="form-control" value="@Model.UserCartList.Sum(x => x.Quantity * x.Price).ToString("C")" readonly />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Sales Tax</label>
+                        <input class="form-control" value="@((Model.UserCartList.Sum(x => x.Quantity * x.Price) * 0.10).ToString("C"))" readonly />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Total</label>
+                        @{
+                            double salesTax = 0.0;
+                            double total = Math.Round(@totalorderprice+salesTax, 2);
+                            Model.orderSummary.TotalOrderAmount = total;
+                        }
+                        <input asp-for="orderSummary.TotalOrderAmount" class="form-control"  readonly />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="orderSummary.PaymentStatus" class="form-label">Payment Option</label>
+                        <select asp-for="orderSummary.PaymentStatus" class="form-control" asp-items="Model.PaymentOptions">
+                            <option value="">Select Payment Option</option>
+                        </select>
+                        <span asp-validation-for="orderSummary.PaymentStatus" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fa fa-check"></i> Submit Order
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

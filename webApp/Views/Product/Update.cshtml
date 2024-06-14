@@ -1,0 +1,71 @@
+﻿@model ProductViewModel
+@{
+    SelectList items = new SelectList(ViewBag.cat, "Id", "Name", Model.Product.CategoryId);
+}
+
+<form method="post" asp-action="Update" asp-controller="Product" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Product.Id" />
+    <div class="form-group">
+        <label asp-for="Product.Name">Name:</label>
+        <input type="text" class="form-control" asp-for="Product.Name" required />
+        <span asp-validation-for="Product.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.Price">Price:</label>
+        <input class="form-control" asp-for="Product.Price" required />
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.Discreption">Description:</label>
+        <textarea asp-for="Product.Discreption" class="form-control" required>@Model.Product.Discreption</textarea>
+    </div>
+    <div class="form-group row">
+        @foreach (var image in Model.Product.ImgUrl)
+        {
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <img src="~/Images/@image.ImageUrl" class="card-img-top img-thumbnail" alt="@Model.Product.Name">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editImageModal@image.Id">Edit</a>
+                        <a href="javascript:void(0)" class="btn btn-danger" onclick="Delete('/Product/DeleteImg/@image.ImageUrl')">Delete</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Image Modal -->
+            <div class="modal fade" id="editImageModal@image.Id" tabindex="-1" aria-labelledby="editImageModalLabel@image.Id" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editImageModalLabel@image.Id">Edit Image</h5>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="~/Images/@image.ImageUrl" class="img-fluid" alt="@Model.Product.Name">
+                            <input type="file" class="form-control-file mt-3" id="editImage@image.Id" name="Images" accept="image/*" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="UpdateImage('@image.Id')">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="form-group">
+        <label for="images">Add New Images:</label>
+        <input type="file" class="form-control-file" id="images" name="Images" accept="image/*" multiple />
+    </div>
+    <div class="form-group">
+        <label for="category">Category:</label>
+        <select asp-for="Product.CategoryId" class="form-select" asp-items="items"></select>
+    </div>
+    <!-- Add other fields as needed -->
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a href="@Url.Action("Index", "Product")" class="btn btn-secondary">Cancel</a>
+</form>
+@section Scripts {
+
+    <script src="~/js/product.js"></script>
+}

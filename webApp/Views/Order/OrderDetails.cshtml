@@ -1,0 +1,217 @@
+﻿@model OrderDetailsVM
+
+@{
+    var isAdmin = User.IsInRole("Admin");
+    var orderHeader = Model.orderHeader;
+    var orderStatus = orderHeader?.OrderStatus ?? string.Empty;
+    var isPending = orderStatus.Equals("Pending", StringComparison.OrdinalIgnoreCase);
+    var isInProcess = orderStatus.Equals("InProcess", StringComparison.OrdinalIgnoreCase);
+    var isShipped = orderStatus.Equals("Shipped", StringComparison.OrdinalIgnoreCase);
+    var isCompleted = orderStatus.Equals("Completed", StringComparison.OrdinalIgnoreCase);
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Customer Details</h2>
+                </div>
+                <div class="card-body">
+                    <form id="orderForm" asp-controller="Order" method="post">
+                        @Html.HiddenFor(m => m.orderHeader.Id)
+                        @Html.HiddenFor(m => m.orderHeader.OrderStatus)
+
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            @if (isAdmin)
+                            {
+                                <input type="text" asp-for="orderHeader.Name" class="form-control" />
+                            }
+                            else
+                            {
+                                <input type="text" asp-for="orderHeader.Name" class="form-control" readonly />
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+                            @if (isAdmin)
+                            {
+                                <input type="text" asp-for="orderHeader.PhoneNumber" class="form-control" />
+                            }
+                            else
+                            {
+                                <input type="text" asp-for="orderHeader.PhoneNumber" class="form-control" readonly />
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Delivery Address</label>
+                            @if (isAdmin)
+                            {
+                                <input type="text" asp-for="orderHeader.DeliveryStreetAddress" class="form-control" />
+                            }
+                            else
+                            {
+                                <input type="text" asp-for="orderHeader.DeliveryStreetAddress" class="form-control" readonly />
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">City</label>
+                            @if (isAdmin)
+                            {
+                                <input type="text" asp-for="orderHeader.City" class="form-control" />
+                            }
+                            else
+                            {
+                                <input type="text" asp-for="orderHeader.City" class="form-control" readonly />
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">State</label>
+                            @if (isAdmin)
+                            {
+                                <input type="text" asp-for="orderHeader.State" class="form-control" />
+                            }
+                            else
+                            {
+                                <input type="text" asp-for="orderHeader.State" class="form-control" readonly />
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Postal Code</label>
+                            @if (isAdmin)
+                            {
+                                <input type="text" asp-for="orderHeader.PostalCode" class="form-control" />
+                            }
+                            else
+                            {
+                                <input type="text" asp-for="orderHeader.PostalCode" class="form-control" readonly />
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Total Order Amount</label>
+                            <input type="text" asp-for="orderHeader.TotalOrderAmount" class="form-control" readonly />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Carrier</label>
+                            <input type="text" name="Carrier" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tracking Number</label>
+                            <input type="text" name="TrackingNumber" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Order Status</label>
+                            @if (isAdmin)
+                            {
+                                <div class="d-flex">
+                                    @if (isPending)
+                                    {
+                                        <button type="submit" asp-action="InProcess" asp-controller="Order" class="btn btn-primary me-2" onclick="updateStatus('InProcess')">Update Status to In Process</button>
+                                    }
+                                    else if (isInProcess)
+                                    {
+                                        <button asp-action="Shipped" asp-controller="Order" type="submit" class="btn btn-primary me-2" onclick="promptShippingInfo()">Update Status to Shipped</button>
+                                    }
+                                    else if (isShipped)
+                                    {
+                                        <button asp-action="Delivered" asp-controller="Order" type="submit" class="btn btn-primary me-2" onclick="updateStatus('Completed')">Update Status to Completed</button>
+                                    }
+                                    else if (isCompleted)
+                                    {
+                                        <span class="btn btn-secondary disabled me-2">Transaction has been completed</span>
+                                    }
+
+                                    @if (!isCompleted && !isShipped)
+                                    {
+                                        <button type="submit" name="action" value="CancelOrder" class="btn btn-danger">Cancel Order</button>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="text" value="@orderStatus" class="form-control" readonly />
+                            }
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Product Details</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>PCS</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model.userProductList)
+                            {
+                                <tr>
+                                    <td>@product.Product?.Name</td>
+                                    <td>@product.Count</td>
+                                    <td>@product.Product.Price.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function updateStatus(status) {
+            const form = document.getElementById('orderForm');
+            form.querySelector('[name="orderHeader.OrderStatus"]').value = status;
+            form.submit();
+        }
+
+        function promptShippingInfo() {
+            const carrier = document.querySelector('[name="Carrier"]').value;
+            const trackingNumber = document.querySelector('[name="TrackingNumber"]').value;
+
+            if (!carrier) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Missing Information',
+                    text: 'Please enter the carrier name'
+                });
+                return;
+            }
+
+            if (!trackingNumber) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Missing Information',
+                    text: 'Please enter the tracking number'
+                });
+                return;
+            }
+
+            updateStatus('Shipped');
+        }
+    </script>
+}

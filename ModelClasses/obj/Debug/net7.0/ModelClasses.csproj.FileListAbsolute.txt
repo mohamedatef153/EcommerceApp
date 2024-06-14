@@ -1,0 +1,12 @@
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\bin\Debug\net7.0\ModelClasses.deps.json
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\bin\Debug\net7.0\ModelClasses.dll
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\bin\Debug\net7.0\ModelClasses.pdb
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\obj\Debug\net7.0\ModelClasses.csproj.AssemblyReference.cache
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\obj\Debug\net7.0\ModelClasses.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\obj\Debug\net7.0\ModelClasses.AssemblyInfoInputs.cache
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\obj\Debug\net7.0\ModelClasses.AssemblyInfo.cs
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\obj\Debug\net7.0\ModelClasses.csproj.CoreCompileInputs.cache
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\obj\Debug\net7.0\ModelClasses.dll
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\obj\Debug\net7.0\refint\ModelClasses.dll
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\obj\Debug\net7.0\ModelClasses.pdb
+C:\Users\Mohamed Atef\source\repos\EcommerceApp\ModelClasses\obj\Debug\net7.0\ref\ModelClasses.dll

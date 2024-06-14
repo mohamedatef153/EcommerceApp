@@ -1,0 +1,65 @@
+﻿@model LoginViewModel
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px;
+            margin: auto;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-login a {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container login-container">
+        <div class="login-form">
+            <h3 class="text-center">Login</h3>
+            <form asp-action="Login" method="post"asp-controller="Account" asp-route-returnUrl="@ViewData["returnUrl"]">
+                <div class="form-group">
+                    <label asp-for="Email">Email address:</label>
+                    <input asp-for="Email" class="form-control"placeholder="Enter email">
+                    <span asp-validation-for="Email" class="form-control"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password">Password:</label>
+                    <input asp-for="Password" class="form-control" placeholder="Enter password">
+                    <span asp-validation-for="Password" class="form-control"></span>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <div class="text-center mt-3">
+                    <a asp-action="Register"asp-controller="Account">Register</a>
+                </div>
+                <div class="text-center mt-3 social-login">
+                    <a href="#" class="btn btn-primary"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="btn btn-danger"><i class="fab fa-google"></i></a>
+                    <a href="#" class="btn btn-info"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
